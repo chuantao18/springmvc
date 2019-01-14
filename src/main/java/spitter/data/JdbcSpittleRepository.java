@@ -38,6 +38,26 @@ public class JdbcSpittleRepository implements SpittleRepository {
                 new SpittleRowMapper(), id);
     }
 
+    @Override
+    public List<Spittle> findRecentSpittles() {
+        return jdbc.query(
+                "select id, message, created_at, latitude, longitude" +
+                        " from Spittle" +
+                        " order by created_at desc limit 20",
+                new SpittleRowMapper());
+    }
+
+    @Override
+    public void save(Spittle spittle) {
+        jdbc.update(
+                "insert into Spittle (message, created_at, latitude, longitude)" +
+                        " values (?, ?, ?, ?)",
+                spittle.getMessage(),
+                spittle.getTime(),
+                spittle.getLatitude(),
+                spittle.getLongitude());
+    }
+
     private static class SpittleRowMapper implements RowMapper<Spittle> {
         public Spittle mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Spittle(

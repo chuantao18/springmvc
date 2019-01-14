@@ -2,12 +2,12 @@ package spitter;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 
 public class Spitter {
 
-    @NotNull
     private Long id;
 
     @NotNull
@@ -29,6 +29,8 @@ public class Spitter {
     @NotNull
     @Size(min=5, max = 30)
     private String email;
+
+    private MultipartFile profilePicture;
 
     public Spitter() {
     }
@@ -102,5 +104,13 @@ public class Spitter {
     @Override
     public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this,"username","password","firstName","lastName","email");
+    }
+
+    public MultipartFile getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(MultipartFile profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
